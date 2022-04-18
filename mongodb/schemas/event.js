@@ -4,7 +4,7 @@ const Mongoose = require('mongoose')
 
 const EventSchema = new Mongoose.Schema({
 
-        id: {
+        eventId: {
             type: String,
             required: true,
             index: true,

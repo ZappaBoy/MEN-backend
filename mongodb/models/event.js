@@ -1,32 +1,67 @@
 'use strict'
 
-const eventModel = require('../connection').models.event
+const EventModel = require('../connection').models.event
 
 async function createEvent(data) {
     return new Promise((resolve, reject) => {
-        console.log('Create event')
-        resolve()
+        const newEvent = new EventModel(data);
+
+        newEvent.save(function (error, data) {
+                if (error) {
+                    reject(error)
+                }
+                resolve(data);
+            }
+        );
     })
 }
 
-async function readEvent(username) {
+async function readEvent(eventId) {
     return new Promise((resolve, reject) => {
-        console.log('Read event')
-        resolve()
+        const filter = {
+            'eventId': eventId
+        }
+
+        EventModel.findOne(
+            filter,
+            function (error, data) {
+                if (error) {
+                    reject(error)
+                }
+                resolve(data);
+            });
     })
 }
 
-async function updateEvent(userData) {
+async function updateEvent(eventId, event) {
     return new Promise((resolve, reject) => {
-        console.log('Update event')
-        resolve()
+        const filter = {
+            'eventId': eventId
+        }
+
+        EventModel.findOneAndUpdate(filter, event,
+            function (error, data) {
+                if (error) {
+                    reject(error)
+                }
+                resolve(data);
+            });
     })
 }
 
-async function deleteEvent() {
+async function deleteEvent(eventId) {
     return new Promise((resolve, reject) => {
-        console.log('Delete event')
-        resolve()
+        const filter = {
+            'eventId': eventId
+        }
+
+        EventModel.findOneAndDelete(filter,
+            function (error, event) {
+                if (error) {
+                    reject(error)
+                }
+                resolve(event);
+            });
     })
 }
 

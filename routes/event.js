@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const event = require('../mongodb/models/event')
+const EventModel = require('../mongodb/models/event')
 
 router.get('/healthcheck', function (req, res, next) {
     res.send('Backend Server: events API module online')
@@ -8,8 +8,8 @@ router.get('/healthcheck', function (req, res, next) {
 
 router.post('/create', async function (req, res, next) {
     try {
-        const data = req.body
-        await event.createEvent(data)
+        const event = req.body
+        await EventModel.createEvent(event)
         res.status(200)
     } catch (error) {
         res.status(500)
@@ -18,10 +18,11 @@ router.post('/create', async function (req, res, next) {
     }
 })
 
-router.get('/read', async function (req, res, next) {
+router.get('/read/:id', async function (req, res, next) {
     try {
-        const data = req.body
-        await event.readEvent(data)
+        const eventId = req.params.id
+        const event = await EventModel.readEvent(eventId)
+        res.send(event)
         res.status(200)
     } catch (error) {
         res.status(500)
@@ -32,8 +33,8 @@ router.get('/read', async function (req, res, next) {
 
 router.put('/update', async function (req, res, next) {
     try {
-        const data = req.body
-        await event.updateEvent(data)
+        const event = req.body
+        await EventModel.updateEvent(event.eventId, event)
         res.status(200)
     } catch (error) {
         res.status(500)
@@ -42,10 +43,10 @@ router.put('/update', async function (req, res, next) {
     }
 })
 
-router.delete('/delete', async function (req, res, next) {
+router.delete('/delete/:id', async function (req, res, next) {
     try {
-        const data = req.body
-        await event.deleteEvent(data)
+        const eventId = req.params.id
+        await EventModel.deleteEvent(eventId)
         res.status(200)
     } catch (error) {
         res.status(500)
