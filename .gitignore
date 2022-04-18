@@ -1,3 +1,7 @@
+.idea
+.env
+mongo-volume
+
 # Logs
 logs
 *.log
