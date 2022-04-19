@@ -31,10 +31,11 @@ router.get('/read/:id', async function (req, res, next) {
     }
 })
 
-router.put('/update', async function (req, res, next) {
+router.put('/update/:id', async function (req, res, next) {
     try {
         const event = req.body
-        await EventModel.updateEvent(event.eventId, event)
+        const eventId = req.params.id
+        await EventModel.updateEvent(eventId, event)
         res.status(200)
     } catch (error) {
         res.status(500)
