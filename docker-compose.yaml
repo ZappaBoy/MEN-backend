@@ -19,7 +19,7 @@ services:
       - mongo-net
   mongodb:
     image: 'mongo:latest'
-    container_name: sfinge_mongodb
+    container_name: men_mongodb
     env_file: .env
     restart: unless-stopped
     volumes:
